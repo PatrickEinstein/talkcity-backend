@@ -14,6 +14,9 @@ import postRoutes from "./routes/posts.js";
 import { createPost } from "./controllers/posts.js";
 import { register } from "./controllers/auth.js";
 import { verifyToken } from "./middleware/auth.js";
+import { RegisterPage } from "./routes/auth.js";
+import { LoginPage } from "./routes/auth.js";
+import { GetUser } from "./routes/users.js";
 // import User from "./models/User.js";
 // import { Post } from "./models/post.js";
 // import {users, posts} from "./data/index.js"
@@ -47,12 +50,15 @@ const upload = multer({ storage });
 
 // ROUTES WITH FILES
 
-app.post("auth/register", upload.single("picture"), register);
+//app.post("auth/register", upload.single("picture"), register);
 app.post("/post", verifyToken, upload.single("picture"), createPost);
+app.use("/auth/register", upload.single("picture"), RegisterPage)
 
 //ROUTES
-app.use("/auth", authRoutes);
+// app.use("/auth", authRoutes);
+app.use("/auth", LoginPage);
 app.use("/users", userRoutes);
+// app.use("/users", GetUser);
 app.use("/posts", postRoutes);
 
 // MONGOOSE SETUP
