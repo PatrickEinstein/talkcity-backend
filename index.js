@@ -1,4 +1,3 @@
-
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
@@ -51,6 +50,9 @@ app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 /* ROUTES */
+app.get("/", (req, res) => {
+  res.send("welcome, server is online now");
+});
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 // app.use("/users", updateFriends);
@@ -65,7 +67,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("MongoDB connected successfully")
+    console.log("MongoDB connected successfully");
 
     /* ADD DATA ONE TIME */
     // User.insertMany(users);
@@ -73,4 +75,4 @@ mongoose
   })
   .catch((error) => console.log(`${error} did not connect`));
 
-  app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
