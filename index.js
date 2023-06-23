@@ -88,7 +88,7 @@ app.post("/posts", verifyToken, upload.single("picture"), createPost);
 app.get("/", (req, res) => {
   res.send("welcome, server is online now");
 });
-app.use("/auth", authRoutes);
+app.use("/authentication", authRoutes);
 app.use("/users", userRoutes);
 // app.use("/users", updateFriends);
 // app.use("/users", userFriend);
