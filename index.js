@@ -8,7 +8,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import authRoutes from "./routes/auth.js";
+import router from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import { register } from "./controllers/auth.js";
@@ -88,7 +88,7 @@ app.post("/posts", verifyToken, upload.single("picture"), createPost);
 app.get("/", (req, res) => {
   res.send("welcome, server is online now");
 });
-app.use("/authentication", authRoutes);
+app.use("/auth", router);
 app.use("/users", userRoutes);
 // app.use("/users", updateFriends);
 // app.use("/users", userFriend);
