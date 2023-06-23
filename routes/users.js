@@ -6,13 +6,13 @@ import {
 } from "../controllers/users.js";
 import { verifyToken } from "../middleware/auth.js";
 
-const router = express.Router();
+const UserRouter = express.Router();
 
 /* READ */
-router.get("/:id", verifyToken, getUser);
-router.get("/:id/friends", verifyToken, getUserFriends);
+UserRouter.get("/:id", verifyToken, getUser);
+UserRouter.get("/:id/friends", verifyToken, getUserFriends);
 
 /* UPDATE */
-router.patch("/:id/:friendId", verifyToken, addRemoveFriend);
+UserRouter.patch("/:id/:friendId", verifyToken, addRemoveFriend);
 
-export default router;
+export default UserRouter;

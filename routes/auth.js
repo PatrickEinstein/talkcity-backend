@@ -5,6 +5,6 @@ import { upload } from "../index.js";
 const router = express.Router();
 
 router.post("/login", login);
-router.post("/", upload.single("picture"), register);
+// router.post("/", upload.single("picture"), register);
 
 export default router;

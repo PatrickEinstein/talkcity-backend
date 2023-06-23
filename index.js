@@ -9,8 +9,8 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import router from "./routes/auth.js";
-import userRoutes from "./routes/users.js";
-import postRoutes from "./routes/posts.js";
+import UserRouter from "./routes/users.js";
+import PostRouter from "./routes/posts.js";
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
@@ -48,40 +48,15 @@ export const upload = multer({ storage });
 
 app.use(
   cors({
-    origin: "https://talkcity.vercel.app",
+    origin: "*",
     methods: "GET, POST, PATCH",
     allowedHeaders: "Content-Type",
     credentials: true,
   })
 );
-// Do you want to skip the checking of the origin and grant authorization?
-// https://vote-verse.vercel.app
-// const skipTheCheckingOfOrigin = true;
-// const allowedOrigins = ["*"];
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       // allow requests with no origin (like mobile apps or curl requests)
-//       // or allow all origines (skipTheCheckingOfOrigin === true)
-//       if (!origin || skipTheCheckingOfOrigin === true)
-//         return callback(null, true);
-
-//       // -1 means that the user's origin is not in the array allowedOrigins
-//       if (allowedOrigins.indexOf(origin) === -1) {
-//         var msg =
-//           "The CORS policy for this site does not " +
-//           "allow access from the specified Origin.";
-
-//         return callback(new Error(msg), false);
-//       }
-//       // origin is in the array allowedOrigins so authorization is granted
-//       return callback(null, true);
-//     },
-//   })
-// );
-
+//upload.single("picture"),
 /* ROUTES WITH FILES */
-//app.post("/auth/register", upload.single("picture"), register);
+app.post("/auth/register",  register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 /* ROUTES */
@@ -89,10 +64,8 @@ app.get("/", (req, res) => {
   res.send("welcome, server is online now");
 });
 app.use("/auth", router);
-app.use("/users", userRoutes);
-// app.use("/users", updateFriends);
-// app.use("/users", userFriend);
-app.use("/posts", postRoutes);
+app.use("/users", UserRouter);
+app.use("/posts", PostRouter);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
@@ -103,10 +76,6 @@ mongoose
   })
   .then(() => {
     console.log("MongoDB connected successfully");
-
-    /* ADD DATA ONE TIME */
-    // User.insertMany(users);
-    // Post.insertMany(posts);
   })
   .catch((error) => console.log(`${error} did not connect`));
 
