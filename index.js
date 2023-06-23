@@ -48,7 +48,7 @@ const upload = multer({ storage });
 
 app.use(
   cors({
-    origin: "https://talkcity.vercel.app/",
+    origin: "https://talkcity.vercel.app",
     methods: "GET, POST, PATCH",
     allowedHeaders: "Content-Type",
     credentials: true,
