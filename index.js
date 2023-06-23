@@ -44,7 +44,7 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-const upload = multer({ storage });
+export const upload = multer({ storage });
 
 app.use(
   cors({
@@ -81,7 +81,7 @@ app.use(
 // );
 
 /* ROUTES WITH FILES */
-app.post("/auth/register", upload.single("picture"), register);
+//app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 /* ROUTES */
