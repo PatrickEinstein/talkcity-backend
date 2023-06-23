@@ -33,6 +33,7 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+mongoose.set('strictQuery', true)
 
 /* FILE STORAGE */
 const storage = multer.diskStorage({
@@ -47,7 +48,7 @@ const upload = multer({ storage });
 
 app.use(
   cors({
-    origin: "https://vote-verse.vercel.app",
+    origin: "*",
     methods: "GET, POST, PATCH",
     allowedHeaders: "Content-Type",
     credentials: true,
